@@ -23,6 +23,13 @@ If you discover a security vulnerability within Lumen, please send an e-mail to 
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+//por simplicidad no ignore el archiv .env 
+
+//Instalar dependencias
+composer install
+
+//levantar servidor
+php -S localhost:8000 -t public
 
 //crear una tabla
 php artisan queue:table
