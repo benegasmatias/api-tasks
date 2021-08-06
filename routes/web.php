@@ -31,10 +31,12 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use($rout
 
      
 
-    $router->get('/task', 'TasksController@idex');
-    $router->post('/task/edit', 'TasksController@editTask');//delohue
-    $router->post('/task/add', 'TasksController@addTask');//delohue
-    $router->post('/task/delete', 'TasksController@deleteTask');//delohue
+    $router->get('/task', 'TasksController@index');
+    $router->put('/task', 'TasksController@editTask');//delohue
+    $router->post('/task', 'TasksController@addTask');//delohue
+    $router->delete('/task/{id}', 'TasksController@deleteTask');//delohue
+
+    $router->get('/task/{cant}', 'TasksController@getTasksPagination');//delohue
     
 
 });

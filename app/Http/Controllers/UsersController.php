@@ -20,18 +20,17 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'createCliente', 'getToken']]);
+        $this->middleware('auth:api', ['except' => ['login', 'createUser', 'getToken']]);
     }
     public function index(Request $request)
     {
 
         //Solo si es de tipo appicationjson se devuelve. Es decir solo de una app no de un navegador
-        if ($request->isJson()) {
+       
             // Eloquent para activarlos hay que descomentar una linea de codigo($app->withEloquent();) ubicada en ./bootstrap/app.php
             $users = User::all();
             return response()->json([$users], 200);
-        }
-        return response()->json(['error' => 'Unautorized'], 401, []);
+    
     }
 
     public function createUser(Request $request)
@@ -39,8 +38,8 @@ class UsersController extends Controller
    
             //Eloquent tiene un facadas(necesitan ser activadas) create
             $user = new User;
-            $user->name = $request->name;
             $user->username = $request->username;
+            $user->password=Hash::make($request->password);
             $user->api_token = Str::random(60);
          
             if($user->save()){
@@ -79,9 +78,7 @@ class UsersController extends Controller
 
            
                 //user comun
-                $user = User::where(function ($query) use ($request) {
-                    $query->where('username', $request->username)->orWhere('email', $request->username);
-                })->whereIn('tipo', [1, 2])->whereIn('estado', [1, 4])->first();
+                $user = User::where('username', $request->username)->first();
 
             if($user && Hash::check($request->password,$user->password)){
                 
@@ -91,7 +88,7 @@ class UsersController extends Controller
                     }
                     $api_token = $this->respondWithToken($token);
                     
-                    return response()->json(['usuario'=>$user,'token'=>$api_token],200);
+                    return response()->json(['user'=>$user,'token'=>$api_token],200);
                      
                     
                   

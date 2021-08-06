@@ -13,14 +13,11 @@ class Users extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string("name");
-            $table->string("email");
-            $table->string("username");
-            $table->string("password");      
-            $table->string("api_token");
-            $table->string("token_acceso");
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('username');
+            $table->string('password');
+            $table->string('api_token');
             $table->timestamps();
         });
     }
@@ -32,8 +29,6 @@ class Users extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('users');
     }
 }

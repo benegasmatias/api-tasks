@@ -37,14 +37,8 @@ class Authenticate
     {
         if ($this->auth->guard($guard)->guest()) {
             return response('unauthenticated.', 401);
-        } else if (!in_array(auth()->user()->tipo, [1, 2])) {
-            //sino es un director o profesor no entra al sistema
-            return response('Unauthorized.', 401);
-        } else if (!in_array(auth()->user()->estado, [1, 4])) {
-            //la cuenta tiene q estar activa o en cambiar contraseña
-            return response('locked.', 401);
-        } else {
-            return $next($request);
         }
+            return $next($request);
+        
     }
 }

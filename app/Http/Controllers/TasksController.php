@@ -18,34 +18,39 @@ class TasksController extends Controller
         //
     }
 
-    public function index(Request $request)
+    public function index()
     {
 
         //Solo si es de tipo appicationjson se devuelve. Es decir solo de una app no de un navegador
-        if ($request->isJson()) {
+    
             // Eloquent para activarlos hay que descomentar una linea de codigo($app->withEloquent();) ubicada en ./bootstrap/app.php
-            $users = Tasks::all();
-            return response()->json([$users], 200);
-        }
-        return response()->json(['error' => 'Unautorized'], 401, []);
+            $tasks = Tasks::all();
+            return response()->json(['tasks'=>$tasks], 200);
+      
     }
-
+    public function getTasksPagination($cant){
+      
+        $tasks = Tasks::paginate( intval($cant));
+        return response()->json(['tasks'=>$tasks], 200);
+    }
     public function addTask(Request $request)
     {
-        if ($request->isJson()) {
+       
             $task = new Tasks;
-            $task->name = $request->name;
-            $task->description = $request->description;
+            if($request->name){
+                $task->name = $request->name;
+                $task->description = $request->description;
 
-            if($task->save()){
-                return response()->json($task, 201);
+                if($task->save()){
+                    return response()->json(['status'=>1,'task'=>$task], 200);
+                }else{
+                    return response()->json(['error' => 'Tarea no creada'], 400);
+                }
             }else{
-                return response()->json(['error' => 'Tarea no creada'], 400);
+                return response()->json(['error' => 'name no puede ser null'], 400);
             }
 
            
-        }
-        return response()->json(['error' => 'Unautorized'], 401, []);
     }
 
   
@@ -74,21 +79,18 @@ class TasksController extends Controller
 
 
 
-    public function deleteTask(Request $request)
+    public function deleteTask($id)
     {  
        
-            $task = Tasks::find($request->id);
+            $task = Tasks::find($id);
             if($task){
                 if($task->delete()){
-                    return response()->json(['Exito  delete '], 201);
+                    return response()->json(['status'=>'1','Exito  delete'], 201);
                 }
             }else{
                 return response()->json(['error' => 'La tarea no existe'], 401);
             }
-            
-            
-        
-       
+
     }
 
    
