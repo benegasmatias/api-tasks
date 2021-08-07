@@ -1,42 +1,20 @@
-# Lumen PHP Framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+Pasos
+1- La carpeta de la api debera estar si tiene xmap en  la carpte htdocs. por defecto esta ubicada en C:\xampp\htdocs
+2- abrir una consola en la raiz del proyecto y colocar el comando
+    Composer install
+3- debera importar la tabla taks.sql que esta en la raiz del proyecto
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+4- por simplicidad no se ignoro el archivo .env
+    pero ahi debera configurar 
 
-## Official Documentation
+    DB_DATABASE=task
+    DB_USERNAME=root
+    DB_PASSWORD=
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+5- luego probar si funciona la api tendo a la direccion http://localhost/api-tasks/public
 
-## Contributing
+6- para ver el swagger http://localhost/api-tasks/public/api/documentation 
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-//por simplicidad no ignore el archiv .env 
-
-//Instalar dependencias
-composer install
-
-//levantar servidor
-php -S localhost:8000 -t public
-
-//crear una tabla
-php artisan queue:table
-php artisan migrate
-
-//ejecutar trabajo
- php artisan queue:work
-
- //para ver swagger
- http://localhost/api-tasks/public/api/documentation
