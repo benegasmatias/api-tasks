@@ -3,7 +3,7 @@ Pasos
 1- La carpeta de la api debera estar si tiene xmap en  la carpte htdocs. por defecto esta ubicada en C:\xampp\htdocs
 2- abrir una consola en la raiz del proyecto y colocar el comando
     Composer install
-3- debera importar la tabla taks.sql que esta en la raiz del proyecto
+3- debera importar la tabla task.sql que esta en la raiz del proyecto
 
 4- por simplicidad no se ignoro el archivo .env
     pero ahi debera configurar 
