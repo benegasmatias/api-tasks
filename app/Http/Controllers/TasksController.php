@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 
 use Illuminate\Http\Request;
+/**
+* @OA\Info(title="API tareas", version="1.0")
+*
+* @OA\Server(url="http://localhost/api-tasks/public")
+*/
+
 
 class TasksController extends Controller
 {
@@ -17,7 +23,18 @@ class TasksController extends Controller
     {
         //
     }
-
+    /**
+    * @OA\Get(
+    *     path="/api/task",
+    *     summary="Mostrar las tareas",
+   
+    *     @OA\Response(
+    *         response=200,
+    *         description="Muestra todas las tareas"
+    *     ),
+     *     security={{ "apiAuth": {} }}
+    * )
+    */
     public function index()
     {
 
@@ -28,11 +45,59 @@ class TasksController extends Controller
             return response()->json(['tasks'=>$tasks], 200);
       
     }
+
+    /**
+    * @OA\Get(
+    *     path="/task/{cant}",
+    *     summary="Mostrar las tareas dependiendo de la cantidad que se le mande",
+    *      @OA\Parameter(
+    *         name="cant",
+    *         in="path",
+    *         required=true,
+    *    @OA\Schema(
+    *          type="integer",
+    *          default=2,
+    *      )
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Devuelve un json del paginador."
+    *     ),
+    *     security={{ "apiAuth": {} }}
+    * )
+    */
     public function getTasksPagination($cant){
       
         $tasks = Tasks::paginate( intval($cant));
         return response()->json(['tasks'=>$tasks], 200);
     }
+
+         /**
+ * @OA\Post(
+ * path="/api/task",
+ * summary="New Task",
+ * description="Crea una nueva tarea",
+ * operationId="store",
+ * tags={"Post"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Objeto tarea",
+ *    @OA\JsonContent(
+ *       required={"name","description"},
+ *       @OA\Property(property="name", type="string", format="text", example="nuevaTarea"),
+ *       @OA\Property(property="description", type="string", format="text", example="description")
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Se creo una nueva",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="{status:1,taks:{name:tarea,description:description}}")
+ *        )
+ *     ),
+ *   security={{ "apiAuth": {} }}
+ * )
+ */
     public function addTask(Request $request)
     {
        
@@ -53,7 +118,32 @@ class TasksController extends Controller
            
     }
 
-  
+            /**
+         * @OA\Put(
+         * path="/api/task",
+         * summary="Edit Task",
+         * description="Edita una tarea",
+         * operationId="edit",
+         * tags={"Put"},
+         * @OA\RequestBody(
+         *    required=true,
+         *    description="Objeto tarea",
+         *    @OA\JsonContent(
+         *       required={"name","description"},
+         *       @OA\Property(property="name", type="string", format="text", example="nuevaTarea"),
+         *       @OA\Property(property="description", type="string", format="text", example="description")
+         *    ),
+         * ),
+         * @OA\Response(
+         *    response=200,
+         *    description="Se guardo Correctamente",
+         *    @OA\JsonContent(
+         *       @OA\Property(property="message", type="string", example="{status:1,taks:{name:tarea,description:description}}")
+         *        )
+         *     ),
+         *     security={{ "apiAuth": {} }}
+         * )
+         */
     public function editTask(Request $request)
     {
   
@@ -77,7 +167,31 @@ class TasksController extends Controller
 
    
 
-
+/**
+     * @OA\Delete(
+     *     path="/api/task",
+     *     summary="Delete Task",
+     *     operationId="delete",
+     *     tags={"Delete"},
+     *  @OA\Parameter(
+    *         name="id",
+    *         in="path",
+    *         required=true,
+    *    @OA\Schema(
+    *          type="integer"
+    *          
+    *      )
+    *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="exito"
+     *        
+     *     ),
+     *     security={{ "apiAuth": {} }}
+     * )
+     * @param Request $request
+     * @return array
+     */
 
     public function deleteTask($id)
     {  

@@ -37,3 +37,6 @@ php artisan migrate
 
 //ejecutar trabajo
  php artisan queue:work
+
+ //para ver swagger
+ http://localhost/api-tasks/public/api/documentation
